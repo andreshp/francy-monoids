@@ -3,7 +3,6 @@
 # See https://github.com/mcmartins/francy
 #######################################################################################
 
-
 ########################################################################
 ##
 #F GluingsHasse(s)
@@ -84,18 +83,25 @@ end;
 
 ########################################################################
 ##
-#F GluingsTree(s)
+#F GluingsTree(s, expand...)
 ## Returns a Francy canvas with the tree of gluings of the numerical 
-## semigroup s. 
+## semigroup s. If the optional argument expand is provided, then
+## the tree is drawn fully expanded.
 ##
 #########################################################################
-GluingsTree := function(s)
-    local SystemOfGeneratorsToString, rgluings, tree, canvas, root;
+GluingsTree := function(s, expand...)
+    local SystemOfGeneratorsToString, rgluings, tree, canvas, root, expand_tree;
 
     SystemOfGeneratorsToString := function(sg)
         return Concatenation("〈", JoinStringsWithSeparator(sg, ","), "〉");
     end;
     
+    if Length(expand) = 0 then
+        expand_tree := false;
+    else
+        expand_tree := true;
+    fi;
+
     # Recursively plot the gluings tree 
     rgluings := function(s, node)
         local lg, label, shape, son1, son2, gen1, gen2, p;
@@ -134,6 +140,10 @@ GluingsTree := function(s)
     root := Shape(ShapeType!.CIRCLE, SystemOfGeneratorsToString(MinimalGenerators(s)));
     SetSize(root, 1);           
     Add(tree, root);
+
+    if expand_tree then 	
+	SetCollapsed(tree, false);
+    fi;
 
     canvas := Canvas("Gluings of a numerical semigroup");
     Add(canvas, tree);

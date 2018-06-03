@@ -13,7 +13,7 @@
 ##
 #########################################################################
 HasseDiagramOfNumericalSemigroup := function(s, A, t...)
-    local hasse, order, layers, _layers, showfacts, graphHasse, rel, V, l, e, i, canvas, message, title, graph;    
+    local hasse, layers, _layers, showfacts, graphHasse, rel, V, l, e, i, canvas, message, title, graph;    
     
     if not IsNumericalSemigroup(s) then
         Error("The argument must be a numerical semigroup.\n");
@@ -146,6 +146,7 @@ AperyHasseDiagramOfNumericalSemigroup := function(arg)
         s := arg[1];
         n := MultiplicityOfNumericalSemigroup(s);
     fi;
+    
     if Length(arg) = 2 then
         s := arg[1];
         n := arg[2];
